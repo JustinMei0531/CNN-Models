@@ -1,7 +1,7 @@
 import keras
 from keras import layers
 
-__all__ = ["vgg11", "vgg13"]
+__all__ = ["vgg11", "vgg13", "vgg16", "vgg19"]
 
 # The letter 'm' represents a max pooling layer
 # In some vgg implementations, capital M is used to represent the maximum pooling layer, but this is not conducive to program maintenance, 
@@ -30,8 +30,8 @@ def __vgg(vgg_name, input_shape, num_classes):
     TypeError: If `input_shape` is not a tuple or list, or if `num_classes` is not an integer.
     ValueError: If `vgg_name` is not a string or not found in the VGG configuration.
     """
-    if not isinstance(input_shape, (tuple, list)):
-        raise TypeError("input_shape must be a tuple or list")
+    if not isinstance(input_shape, (tuple, list, keras.KerasTensor)):
+        raise TypeError("input_shape must be a tuple or list or keras.KerasTensor")
     if not isinstance(num_classes, int):
         raise TypeError("num_classes must be an integer")
     if not isinstance(vgg_name, str) or vgg_name not in vgg_config:
@@ -47,7 +47,9 @@ def __vgg(vgg_name, input_shape, num_classes):
     # x = layers.MaxPooling2D(pool_size=(2, 2), strides=(2, 2))(x)
     x = layers.Flatten()(x)
     x = layers.Dense(units=4096, activation="relu")(x)
+    x= layers.Dropout(.5)(x)
     x = layers.Dense(units=4096, activation="relu")(x)
+    x= layers.Dropout(.5)(x)
     outputs = layers.Dense(units=num_classes, activation="softmax")(x)
 
     model = keras.Model(input_tensor, outputs)
