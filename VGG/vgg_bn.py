@@ -1,5 +1,5 @@
+from keras import layers, KerasTensor
 import keras
-from keras import layers
 
 __all__ = [
     "vgg11_bn",
@@ -19,7 +19,7 @@ vgg_config = dict(
 
 
 def __vggbn(vggbn_name, input_shape, num_classes):
-    if not isinstance(input_shape, (tuple, list, keras.KerasTensor)):
+    if not isinstance(input_shape, (tuple, list, KerasTensor)):
         raise TypeError("input_shape must be a tuple or list or keras.KerasTensor")
     if not isinstance(num_classes, int):
         raise TypeError("num_classes must be an integer")
@@ -64,5 +64,3 @@ def vgg16_bn(input_shape, num_classes):
 def vgg19_bn(input_shape, num_classes):
     return __vggbn("vgg19", input_shape, num_classes)
 
-
-vgg19_bn((224, 224, 3), 10).summary()

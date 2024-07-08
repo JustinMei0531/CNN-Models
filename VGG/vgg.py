@@ -1,6 +1,7 @@
 import keras
 from keras import layers
 
+
 __all__ = ["vgg11", "vgg13", "vgg16", "vgg19"]
 
 # The letter 'm' represents a max pooling layer
